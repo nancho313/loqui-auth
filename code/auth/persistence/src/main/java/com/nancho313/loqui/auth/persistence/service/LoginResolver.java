@@ -2,7 +2,9 @@ package com.nancho313.loqui.auth.persistence.service;
 
 import com.nancho313.loqui.auth.persistence.client.mongodb.dao.AuthUserMongodbDAO;
 import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,13 +14,21 @@ import java.time.ZoneOffset;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 public class LoginResolver {
 
     private static final String INVALID_CREDENTIALS_ERROR_MESSAGE = "The given credentials are not valid.";
+
     private final AuthUserMongodbDAO authUserDao;
 
     private final PasswordEncoder loquiPasswordEncoder;
+
+    private final String jwtKey;
+
+    public LoginResolver(AuthUserMongodbDAO authUserDao, PasswordEncoder loquiPasswordEncoder, @Value("${loqui.auth.jwt.key}") String jwtKey) {
+        this.authUserDao = authUserDao;
+        this.loquiPasswordEncoder = loquiPasswordEncoder;
+        this.jwtKey = jwtKey;
+    }
 
     public String login(String username, String password) {
 
@@ -28,12 +38,13 @@ public class LoginResolver {
 
             var authUser = optionalAuthUser.get();
             validatePassword(password, authUser.password());
-            var key = Jwts.SIG.HS256.key().build();
+            var key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtKey));
             return Jwts.builder()
                     .subject(authUser.id())
                     .signWith(key)
                     .issuedAt(getIssuedAtDate())
                     .expiration(getExpirationDate())
+                    .claim("lqu", authUser.username())
                     .compact();
         } else {
             throw new BadCredentialsException(INVALID_CREDENTIALS_ERROR_MESSAGE);
