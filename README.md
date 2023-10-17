@@ -1,1 +1,1 @@
-# loqui-auth
+# loqui-users
