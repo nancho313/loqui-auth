@@ -6,10 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface AuthUserMongodbDAO extends MongoRepository<AuthUserDocument, String> {
-
-    boolean existsByUsername(String username);
-
-    boolean existsByEmail(String email);
-
-    Optional<AuthUserDocument> findByUsername(String username);
+  
+  boolean existsByUsername(String username);
+  
+  boolean existsByEmail(String email);
+  
+  Optional<AuthUserDocument> findByUsername(String username);
 }

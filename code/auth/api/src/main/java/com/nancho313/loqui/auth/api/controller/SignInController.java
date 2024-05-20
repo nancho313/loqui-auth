@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/signin")
 @RequiredArgsConstructor
 public class SignInController {
-
-    private final CommandHandler<SignInCommand, SignInCommandResponse> commandHandler;
-
-    @PostMapping
-    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
-
-        var response = commandHandler.handle(new SignInCommand(signInRequest.username(), signInRequest.password()));
-        return ResponseEntity.ok(new SignInResponse(response.jwt()));
-    }
-
+  
+  private final CommandHandler<SignInCommand, SignInCommandResponse> commandHandler;
+  
+  @PostMapping
+  public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
+    
+    var response = commandHandler.handle(new SignInCommand(signInRequest.username(), signInRequest.password()));
+    return ResponseEntity.ok(new SignInResponse(response.jwt()));
+  }
 }

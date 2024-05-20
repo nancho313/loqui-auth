@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class SignUpController {
-
-    private final CommandHandler<SignUpCommand, EmptyCommandResponse> commandHandler;
-
-    @PostMapping
-    public ResponseEntity<Void> signUpUser(@RequestBody SignUpApiRequest request) {
-
-        commandHandler.handle(new SignUpCommand(request.username(), request.password(), request.email()));
-        return ResponseEntity.ok(null);
-    }
-
+  
+  private final CommandHandler<SignUpCommand, EmptyCommandResponse> commandHandler;
+  
+  @PostMapping
+  public ResponseEntity<Void> signUpUser(@RequestBody SignUpApiRequest request) {
+    
+    commandHandler.handle(new SignUpCommand(request.username(), request.password(), request.email()));
+    return ResponseEntity.ok(null);
+  }
 }

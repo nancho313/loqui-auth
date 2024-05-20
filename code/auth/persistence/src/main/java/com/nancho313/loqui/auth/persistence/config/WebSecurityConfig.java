@@ -23,6 +23,8 @@ import java.util.List;
 @Configuration
 public class WebSecurityConfig {
   
+  private static final List<String> ALL_ALLOWED_VALUE = List.of("*");
+  
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     
@@ -34,10 +36,11 @@ public class WebSecurityConfig {
   
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
+    
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedMethods(Arrays.asList("*"));
-    configuration.setAllowedOrigins(Arrays.asList("*"));
-    configuration.setAllowedHeaders(Arrays.asList("*"));
+    configuration.setAllowedMethods(ALL_ALLOWED_VALUE);
+    configuration.setAllowedOrigins(ALL_ALLOWED_VALUE);
+    configuration.setAllowedHeaders(ALL_ALLOWED_VALUE);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;

@@ -9,18 +9,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SignInCommandHandler extends CommandHandler<SignInCommand, SignInCommandResponse> {
-
-    private final LoginResolver loginResolver;
-
-    public SignInCommandHandler(Validator validator, LoginResolver loginResolver) {
-        super(validator);
-        this.loginResolver = loginResolver;
-    }
-
-    @Override
-    protected SignInCommandResponse handleCommand(SignInCommand command) {
-
-        return new SignInCommandResponse(loginResolver.login(command.username(), command.password()));
-
-    }
+  
+  private final LoginResolver loginResolver;
+  
+  public SignInCommandHandler(Validator validator, LoginResolver loginResolver) {
+    super(validator);
+    this.loginResolver = loginResolver;
+  }
+  
+  @Override
+  protected SignInCommandResponse handleCommand(SignInCommand command) {
+    
+    return new SignInCommandResponse(loginResolver.login(command.username(), command.password()));
+  }
 }
