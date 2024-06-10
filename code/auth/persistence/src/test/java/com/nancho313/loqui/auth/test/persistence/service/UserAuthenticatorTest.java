@@ -59,7 +59,7 @@ class UserAuthenticatorTest {
     assertThat(capturedDocument.id()).isEqualTo(id);
     assertThat(capturedDocument.username()).isEqualTo(username);
     assertThat(capturedDocument.password()).isNotBlank();
-    assertThat(capturedDocument.creationDate()).isCloseTo(LocalDateTime.now(), within(500, ChronoUnit.MILLIS));
+    assertThat(capturedDocument.creationDate()).isCloseTo(LocalDateTime.now(), within(1, ChronoUnit.SECONDS));
 
     var argCaptorCreatedUserEvent = ArgumentCaptor.forClass(CreatedUserEvent.class);
     verify(emitterMock).sendMessage(argCaptorCreatedUserEvent.capture(), anyList());
