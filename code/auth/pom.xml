@@ -13,7 +13,7 @@
   <artifactId>auth-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>pom</name>
+  <name>loqui-auth</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,6 +27,7 @@
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.coverage.exclusions>
       **/persistence/**/kafka/emitter/*,
+      **/boot/**/*,
       **/config/*
     </sonar.coverage.exclusions>
     <skipmutationtests>true</skipmutationtests>
