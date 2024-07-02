@@ -1,6 +1,5 @@
 package com.nancho313.loqui.auth.api.controller;
 
-
 import com.nancho313.loqui.auth.api.dto.SignUpApiRequest;
 import com.nancho313.loqui.auth.model.command.CommandHandler;
 import com.nancho313.loqui.auth.model.command.EmptyCommandResponse;
@@ -23,6 +22,6 @@ public class SignUpController {
   public ResponseEntity<Void> signUpUser(@RequestBody SignUpApiRequest request) {
     
     commandHandler.handle(new SignUpCommand(request.username(), request.password(), request.email()));
-    return ResponseEntity.ok(null);
+    return ResponseEntity.noContent().build();
   }
 }

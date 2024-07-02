@@ -51,6 +51,36 @@ class SignUpCommandHandlerTest {
     assertThat(response).isNotNull().isInstanceOf(EmptyCommandResponse.class);
     verify(userAuthenticatorMock).storeBasicCredentials(anyString(), eq(username), eq(password), eq(email));
   }
+
+  @Test
+  void signUpThrowsExceptionDueUsernameIsAlreadyUsed() {
+
+    // Arrange
+    var username = "foo";
+    var password = "123";
+    var email = "foo@hotmail.com";
+    var command = new SignUpCommand(username, password, email);
+    when(userAuthenticatorMock.existsByUsername("foo")).thenReturn(Boolean.TRUE);
+
+    // Act & Assert
+    var exception = assertThrows(IllegalArgumentException.class, () -> sut.handle(command));
+    assertThat(exception.getMessage()).isEqualTo("The username foo is already used.");
+  }
+
+  @Test
+  void signUpThrowsExceptionDueEmailIsAlreadyUsed() {
+
+    // Arrange
+    var username = "foo";
+    var password = "123";
+    var email = "foo@hotmail.com";
+    var command = new SignUpCommand(username, password, email);
+    when(userAuthenticatorMock.existsByEmail("foo@hotmail.com")).thenReturn(Boolean.TRUE);
+
+    // Act & Assert
+    var exception = assertThrows(IllegalArgumentException.class, () -> sut.handle(command));
+    assertThat(exception.getMessage()).isEqualTo("The email foo@hotmail.com is already used.");
+  }
   
   @MethodSource("getInvalidData")
   @ParameterizedTest
