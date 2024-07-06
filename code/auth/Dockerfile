@@ -1,3 +1,5 @@
 FROM openjdk:21-slim
-COPY loqui-auth-1.0-SNAPSHOT.jar .
-CMD ["java", "-jar", "loqui-auth-1.0-SNAPSHOT.jar"]
+LABEL org.opencontainers.image.source="https://github.com/nancho313/loqui-auth"
+LABEL org.opencontainers.image.description="Java Microservice that handles the authentication logic made throughout the loqui system."
+COPY boot/target/loqui-auth*.jar app.jar
+CMD ["java", "-jar", "/app.jar"]
